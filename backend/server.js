@@ -7,8 +7,6 @@ const port = process.env.PORT ||  5001
 //initialize express
 const app = express();
 
-app.get('/api/goals', (req, res) => {
-    res.json({ message:'Get goals' }); //will show in postman
-});
+app.use('/api/goals', require('./routes/goalRoutes')); //if you hit api/goals, it will go to goalRoutes
 
 app.listen(port, () => console.log(`listening on port ${port}`));
