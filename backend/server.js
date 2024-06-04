@@ -17,3 +17,4 @@ app.use('/api/goals', require('./routes/goalRoutes')); //if you hit api/goals, i
 app.use(errorHandler) //error handler middleware, it will catch any error that is thrown by this middleware and override the default error message
 
 app.listen(port, () => console.log(`listening on port ${port}`));
+
