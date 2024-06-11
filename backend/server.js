@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 app.use('/api/goals', require('./routes/goalRoutes')); //if you hit api/goals, it will go to goalRoutes
+app.use('/api/users', require('./routes/userRoutes'));
 
 app.use(errorHandler) //error handler middleware, it will catch any error that is thrown by this middleware and override the default error message
 
