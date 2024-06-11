@@ -65,7 +65,6 @@ const deleteGoals = asyncHandler(async(req, res) => {
         }
 
         await Goal.findByIdAndDelete(req.params.id);
-        
 
   res.status(200).json({ id:req.params.id }); //will show in postman
 });
