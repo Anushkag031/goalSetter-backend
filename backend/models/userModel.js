@@ -1,4 +1,4 @@
-const mongoose = require('mongoose  || require("mongodb")');
+const mongoose = require('mongoose');
 
 //define the schema for the user
 const userSchema = mongoose.Schema({
