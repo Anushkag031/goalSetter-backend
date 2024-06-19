@@ -32,14 +32,48 @@ const registerUser = asyncHandler(async (req, res) => {
     password: hashedPassword,
   });
 
-  res.json({ message: "User registered" });
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    });
+  }
+  else
+  {
+    res.status(400);
+    throw new Error('Invalid user data');
+  }
+
+  //create a token
+
 });
 
 //@desc authentication of user
 //@ route POST /api/users/login
 //@access public
 const loginUser = asyncHandler(async (req, res) => {
-  res.json({ message: "User login" });
+  const { email, password } = req.body;
+
+  //check for user already exists
+  const user = await User.findOne({ email });
+
+  if(user && (await bycrypt.compare(password, user.password)))
+    {
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            //token: null
+        })
+    }
+    else
+    {
+        res.status(401);
+        throw new Error('Invalid email or password');
+    }
+
+  
 });
 
 //@desc get the user profile
