@@ -37,6 +37,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      token: generateToken(user._id),
     });
   }
   else
@@ -64,7 +65,7 @@ const loginUser = asyncHandler(async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            //token: null
+            token: generateToken(user._id)
         })
     }
     else
@@ -78,10 +79,33 @@ const loginUser = asyncHandler(async (req, res) => {
 
 //@desc get the user profile
 //@ route Get /api/users/me
-//@access public
+//@access private
 const getMe = asyncHandler(async (req, res) => {
-  res.json({ message: "User profile" });
+  const {_id, name, email} = await User.findById(req.user._id);
+
+  if(req.user) //add the user to the request object ( req.user is from the middleware)
+  {
+    res.json({
+      _id,
+      name,
+      email
+    })
+  }
+  else
+  {
+    res.status(404);
+    throw new Error('User not found');
+  }
 });
+
+
+
+// generate token
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+};
 
 module.exports = {
   registerUser,
