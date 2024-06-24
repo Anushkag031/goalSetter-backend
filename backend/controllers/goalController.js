@@ -33,7 +33,6 @@ const setGoals = asyncHandler( async(req, res) => {
   })
   res.status(200).json(goal); //will show in postman
 });
-
 //@desc Update goals from db
 //@ route PUT /api/goals
 //@access Private
@@ -47,8 +46,6 @@ const updateGoals =asyncHandler( async(req, res) => {
     if(!goal){
         res.status(404)
         throw new Error('Goal not found');
-
-
         }
 
         const user=await User.findById(req.user.id); //passing the id
